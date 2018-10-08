@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+<h:head>
+    <h:outputScript name="js/locale_translations.js"/>
+    <title>Empleados</title>
+</h:head>
+<h:body>
+    <h:form id="formulario">
+        <ui:include src="./componentes/menu.xhtml"/>
+        <p:spacer height="20"/>
+        <div class="ui-g">
+            <div class="ui-g-12">
+                <p:commandButton id="guardar" value="Nuevo Empleado" update="dlgNuevoEmpleado"
+                                 action="#{empleadoBean.initGuardar}" icon="ui-icon-person"/>
+            </div>
+        </div>
+        <p:dataTable id="tabEmpleados" var="empleado"
+                     style="margin-bottom:100px" value="#{empleadoBean.empleados}"
+                     paginator="true" rows="10" selectionMode="single" rowKey="#{empleado.id}"
+                     selection="#{empleadoBean.empleadoSeleccionado}"
+                     emptyMessage="No se existen empleados dados de alta"
+                     rowsPerPageTemplate="5,10,15" paginatorPosition="bottom">
+            <p:column headerText="Nombre" filterBy="#{empleado.nombre}" filterMatchMode="contains"
+                      style="cursor:pointer;text-align:center; word-wrap:break-word; white-space:normal;">
+                <h:outputText value="#{empleado.nombre}"/>
+            </p:column>
+            <p:column headerText="Apellido Materno" filterBy="#{empleado.apellidoPaterno}" filterMatchMode="contains"
+                      style="cursor:pointer;text-align:center; word-wrap:break-word; white-space:normal;">
+                <h:outputText value="#{empleado.apellidoPaterno}"/>
+            </p:column>
+            <p:column headerText="Apellido Materno" filterBy="#{empleado.apellidoMaterno}" filterMatchMode="contains"
+                      style="cursor:pointer;text-align:center; word-wrap:break-word; white-space:normal;">
+                <h:outputText value="#{empleado.apellidoMaterno}"/>
+            </p:column>
+            <p:column headerText="Fecha de Nacimiento" filterBy="#{empleado.fechaNacimiento}" filterMatchMode="contains"
+                      style="cursor:pointer;text-align:center; word-wrap:break-word; white-space:normal;">
+                <h:outputText value="#{empleado.fechaNacimiento}">
+                    <f:convertDateTime pattern="dd-MM-yyyy"/>
+                </h:outputText>
+            </p:column>
+            <p:column headerText="Telefono" filterBy="#{empleado.telefono}" filterMatchMode="contains"
+                      style="cursor:pointer;text-align:center; word-wrap:break-word; white-space:normal;">
+                <h:outputText value="#{empleado.telefono}"/>
+            </p:column>
+            <p:column headerText="Calle" filterBy="#{empleado.calle}" filterMatchMode="contains"
+                      style="cursor:pointer;text-align:center; word-wrap:break-word; white-space:normal;">
+                <h:outputText value="#{empleado.calle}"/>
+            </p:column>
+            <p:column headerText="Num. Exterior" filterBy="#{empleado.numExterior}" filterMatchMode="contains"
+                      style="cursor:pointer;text-align:center; word-wrap:break-word; white-space:normal;">
+                <h:outputText value="#{empleado.numExterior}"/>
+            </p:column>
+            <p:column headerText="Num. Interior" filterBy="#{empleado.numInterior}" filterMatchMode="contains"
+                      style="cursor:pointer;text-align:center; word-wrap:break-word; white-space:normal;">
+                <h:outputText value="#{empleado.numInterior}"/>
+            </p:column>
+            <p:column style="width:45px;text-align: center">
+                <p:commandButton icon="ui-icon-trash" title="Eliminar empleado">
+                    <f:setPropertyActionListener value="#{empleado}"
+                                                 target="#{empleadoBean.empleadoSeleccionado}"/>
+                </p:commandButton>
+            </p:column>
+            <f:facet name="paginatorTopLeft">
+                <p:commandButton icon="ui-icon-search" value="View"/>
+            </f:facet>
+        </p:dataTable>
+
+        <p:dialog header="Nuevo empleado" id="dlgNuevoEmpleado" widgetVar="dlgNuevoEmpleado" position="top"
+                  resizable="false" modal="true">
+            <h:panelGrid id="gridE" columns="2" cellpadding="5">
+                <p:outputLabel for="nombre" value="Nombre(s): "/>
+                <p:inputText id="nombre" value="#{empleadoBean.nuevoEmpleado.nombre}"/>
+                <p:outputLabel for="aPaterno" value="Apellido Paterno: "/>
+                <p:inputText id="aPaterno" value="#{empleadoBean.nuevoEmpleado.apellidoPaterno}"/>
+                <p:outputLabel for="aMaterno" value="Apellido Materno: "/>
+                <p:inputText id="aMaterno" value="#{empleadoBean.nuevoEmpleado.apellidoMaterno}"/>
+                <p:outputLabel for="fNacimiento" value="Fecha Nacimiento: "/>
+                <p:calendar id="fNacimiento" locale="es" navigator="true"
+                            value="#{empleadoBean.nuevoEmpleado.fechaNacimiento}" showOn="button" pattern="dd-MM-yyyy"/>
+                <p:outputLabel for="telefono" value="Telefono: "/>
+                <p:inputMask id="telefono" value="#{empleadoBean.nuevoEmpleado.telefono}" mask="(999) 999-9999"/>
+                <p:outputLabel for="calle" value="Calle: "/>
+                <p:inputText id="calle" value="#{empleadoBean.nuevoEmpleado.calle}"/>
+                <p:outputLabel for="numExterior" value="Num.Exterior: "/>
+                <p:inputText id="numExterior" value="#{empleadoBean.nuevoEmpleado.numExterior}"/>
+                <p:outputLabel for="numInterior" value="Num.Interior: "/>
+                <p:inputText id="numInterior" value="#{empleadoBean.nuevoEmpleado.numInterior}"/>
+                <p:outputLabel for="cp" value="Cp: "/>
+                <p:inputMask id="cp" mask="99999" value="#{empleadoBean.nuevoEmpleado.cp}"/>
+            </h:panelGrid>
+            <div align="center" style="margin-top:10px">
+                <p:commandButton icon="ui-icon-disk" value="Guardar" action="#{empleadoBean.guardar}" update="tabEmpleados"/>
+                <p:commandButton value="Cancelar" icon="ui-icon-closethick" action="#{empleadoBean.cancelar}"/>
+            </div>
+
+        </p:dialog>
+    </h:form>
+</h:body>
+</html>
