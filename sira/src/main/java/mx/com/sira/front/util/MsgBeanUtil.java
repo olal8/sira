@@ -58,4 +58,7 @@ public static void mensajes() {
 		RequestContext rc = RequestContext.getCurrentInstance();
 		rc.execute(accion);
 	}
+	public static void actualizarElemento(String elementos){
+		RequestContext.getCurrentInstance().update(elementos);
+	}
 }

@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import mx.com.sira.front.dto.UsuarioDto;
 
-@FeignClient(name="usuario",url = "http://localhost:8080")
+@FeignClient(name="usuario",url = "${cliente.feign.url}")
 public interface UsuarioService {
 
 	 @RequestMapping(method = RequestMethod.GET, value = "/usuario/")

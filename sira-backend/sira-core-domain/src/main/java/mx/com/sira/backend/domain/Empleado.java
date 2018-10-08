@@ -1,5 +1,8 @@
 package mx.com.sira.backend.domain;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
@@ -9,10 +12,11 @@ import java.util.Date;
  */
 @Entity
 @Table(name = "empleado")
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Empleado implements Serializable {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "id_usuario")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "idempleado")
     private long idEmpleado;
     @Column(name = "nombre")
     private String nombre;
@@ -21,6 +25,7 @@ public class Empleado implements Serializable {
     @Column(name = "a_materno")
     private String apellidoMaterno;
     @Column(name = "fecha_nacimiento")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd",timezone = "EST")
     private Date fechaNacimiento;
     @Column(name = "telefono")
     private String telefono;

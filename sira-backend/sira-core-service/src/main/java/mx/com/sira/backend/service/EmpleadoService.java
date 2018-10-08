@@ -11,9 +11,9 @@ import java.util.List;
 public interface EmpleadoService {
     List<Empleado> getEmpleados()throws EmpleadoException;
 
-    Empleado getEmpleado(int idEmpleado);
+    Empleado getEmpleado(long idEmpleado)throws EmpleadoException;
 
-    void guardarEmpleado(Empleado empleado);
+    void guardarEmpleado(Empleado empleado) throws EmpleadoException ;
 
-    int modificarEmpleado(Empleado empleado);
+    void modificarEmpleado(Empleado empleado)throws EmpleadoException;
 }
