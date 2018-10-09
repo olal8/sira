@@ -25,7 +25,7 @@ public class Empleado implements Serializable {
     @Column(name = "a_materno")
     private String apellidoMaterno;
     @Column(name = "fecha_nacimiento")
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd",timezone = "EST")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd", timezone = "EST")
     private Date fechaNacimiento;
     @Column(name = "telefono")
     private String telefono;
@@ -39,6 +39,8 @@ public class Empleado implements Serializable {
     private String colonia;
     @Column(name = "cp")
     private String cp;
+    @Column(name = "estatus")
+    private boolean estatus;
 
     public long getIdEmpleado() {
         return idEmpleado;
@@ -128,6 +130,14 @@ public class Empleado implements Serializable {
         this.cp = cp;
     }
 
+    public boolean isEstatus() {
+        return estatus;
+    }
+
+    public void setEstatus(boolean estatus) {
+        this.estatus = estatus;
+    }
+
     @Override
     public String toString() {
         return "Empleado{" +
@@ -142,6 +152,7 @@ public class Empleado implements Serializable {
                 ", numInterior='" + numInterior + '\'' +
                 ", colonia='" + colonia + '\'' +
                 ", cp='" + cp + '\'' +
+                ", estatus=" + estatus +
                 '}';
     }
 }

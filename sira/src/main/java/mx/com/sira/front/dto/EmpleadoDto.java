@@ -6,7 +6,7 @@ import java.util.Date;
  * Created by gerry on 06/10/18.
  */
 public class EmpleadoDto {
-    private long id;
+    private long idEmpleado;
     private String nombre;
     private String apellidoPaterno;
     private String apellidoMaterno;
@@ -17,13 +17,14 @@ public class EmpleadoDto {
     private String numInterior;
     private String colonia;
     private String cp;
+    private String estatus;
 
-    public long getId() {
-        return id;
+    public long getIdEmpleado() {
+        return idEmpleado;
     }
 
-    public void setId(long id) {
-        this.id = id;
+    public void setIdEmpleado(long idEmpleado) {
+        this.idEmpleado = idEmpleado;
     }
 
     public String getNombre() {
@@ -106,10 +107,18 @@ public class EmpleadoDto {
         this.cp = cp;
     }
 
+    public String getEstatus() {
+        return estatus;
+    }
+
+    public void setEstatus(String estatus) {
+        this.estatus = estatus;
+    }
+
     @Override
     public String toString() {
         return "EmpleadoDto{" +
-                "id=" + id +
+                "idEmpleado=" + idEmpleado +
                 ", nombre='" + nombre + '\'' +
                 ", apellidoPaterno='" + apellidoPaterno + '\'' +
                 ", apellidoMaterno='" + apellidoMaterno + '\'' +
@@ -120,6 +129,7 @@ public class EmpleadoDto {
                 ", numInterior='" + numInterior + '\'' +
                 ", colonia='" + colonia + '\'' +
                 ", cp='" + cp + '\'' +
+                ", estatus='" + estatus + '\'' +
                 '}';
     }
 }

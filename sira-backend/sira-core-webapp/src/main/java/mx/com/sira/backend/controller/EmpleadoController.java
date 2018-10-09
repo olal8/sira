@@ -74,4 +74,20 @@ public class EmpleadoController {
         }
         return new ResponseEntity<List<Empleado>>(empleados, HttpStatus.OK);
     }
+
+    @RequestMapping(value = "/empleado/delete/{id}", method = RequestMethod.PUT)
+    public ResponseEntity<List<Empleado>> eliminarEmpleado(@PathVariable("id") long id, @RequestBody Empleado empleado) throws EmpleadoException {
+        List<Empleado> empleados = new ArrayList<>();
+        try {
+            Empleado empleadoActual = empleadoService.getEmpleado(id);
+            empleadoActual.setEstatus(false);
+            empleadoService.modificarEmpleado(empleadoActual);
+            empleados = empleadoService.getEmpleados();
+        } catch (EntityNotFoundException en) {
+            throw new EmpleadoException(en.getMessage());
+        } catch (Exception ex) {
+            throw new EmpleadoException(ex.getMessage());
+        }
+        return new ResponseEntity<List<Empleado>>(empleados, HttpStatus.OK);
+    }
 }

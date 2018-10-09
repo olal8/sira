@@ -33,7 +33,7 @@ public class EmpleadoServiceImpl implements EmpleadoService {
     public List<Empleado> getEmpleados() throws EmpleadoException {
         List<Empleado> empleados = new ArrayList<>();
         try {
-            empleados = empleadoRepository.findAll();
+            empleados = empleadoRepository.getEmpleados();
         } catch (Exception ex) {
             LOG.error("Ocurrio un error al consultar los datos {}", ex);
             throw new EmpleadoException(mensajes.getMensaje("empleados.error1"), ex);
@@ -71,7 +71,7 @@ public class EmpleadoServiceImpl implements EmpleadoService {
     @Transactional(rollbackFor = {Exception.class, EmpleadoException.class})
     public void modificarEmpleado(Empleado empleado) throws EmpleadoException {
         try {
-            empleadoRepository.save(null);
+            empleadoRepository.save(empleado);
         } catch (Exception ex) {
             LOG.error("Error al guardar los datos {}", ex);
             throw new EmpleadoException(mensajes.getMensaje("empleados.error5"), ex);

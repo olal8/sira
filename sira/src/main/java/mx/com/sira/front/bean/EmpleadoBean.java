@@ -5,7 +5,6 @@ import mx.com.sira.front.dto.EmpleadoDto;
 import mx.com.sira.front.util.MsgBeanUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import sun.rmi.runtime.Log;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
@@ -25,6 +24,7 @@ public class EmpleadoBean {
     private List<EmpleadoDto> empleados;
     private EmpleadoDto empleadoSeleccionado;
     private EmpleadoDto nuevoEmpleado;
+    private EmpleadoDto empleadoEliminar;
 
     @PostConstruct
     public void init() {
@@ -53,6 +53,26 @@ public class EmpleadoBean {
         MsgBeanUtil.ejecutaAccion("PF('dlgNuevoEmpleado').hide()");
     }
 
+    public void initEliminar() {
+        LOG.info("Empleado seleccionado a eliminar {}", empleadoSeleccionado);
+        setEmpleadoEliminar(empleadoSeleccionado);
+        MsgBeanUtil.ejecutaAccion("PF('confirmEliminar').show()");
+    }
+
+    public void eliminar() {
+        try {
+            LOG.info("Empleado seleccionado a eliminar {}", getEmpleadoEliminar());
+            empleadoService.eliminarEmpleado(getEmpleadoEliminar().getIdEmpleado(), null);
+            setEmpleados(empleadoService.getEmpleados());
+            MsgBeanUtil.ejecutaAccion("PF('confirmEliminar').hide()");
+        } catch (Exception ex) {
+            MsgBeanUtil.ejecutaAccion("PF('confirmEliminar').hide()");
+            LOG.error("Error al realizar la peticion para eliminar un empleado", ex);
+
+        }
+
+    }
+
     public List<EmpleadoDto> getEmpleados() {
         return empleados;
     }
@@ -75,5 +95,13 @@ public class EmpleadoBean {
 
     public void setNuevoEmpleado(EmpleadoDto nuevoEmpleado) {
         this.nuevoEmpleado = nuevoEmpleado;
+    }
+
+    public EmpleadoDto getEmpleadoEliminar() {
+        return empleadoEliminar;
+    }
+
+    public void setEmpleadoEliminar(EmpleadoDto empleadoEliminar) {
+        this.empleadoEliminar = empleadoEliminar;
     }
 }

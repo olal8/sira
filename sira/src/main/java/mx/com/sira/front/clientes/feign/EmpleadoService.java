@@ -13,6 +13,14 @@ import java.util.List;
 public interface EmpleadoService {
     @RequestMapping(method = RequestMethod.GET, value = "/empleado/")
     List<EmpleadoDto> getEmpleados();
-    @RequestMapping(method = RequestMethod.POST,value = "/empleado/")
+
+    @RequestMapping(method = RequestMethod.POST, value = "/empleado/")
     List<EmpleadoDto> guardar(@RequestBody EmpleadoDto empleado);
+
+    @RequestMapping(method = RequestMethod.PUT, value = "/empleado/{id}")
+    List<EmpleadoDto> actualizarEmpleado(@RequestBody EmpleadoDto empleadoDto);
+
+    @RequestMapping(method = RequestMethod.PUT, value = "/empleado/delete/{id}")
+    List<EmpleadoDto> eliminarEmpleado(@PathVariable("id")long id,@RequestBody EmpleadoDto empleadoDto);
+
 }
