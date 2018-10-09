@@ -25,7 +25,7 @@ public static void mensajes() {
 	private static void enviaMensaje(Severity severity, String mensaje, String error, String... dialog) {
 		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(severity, error, mensaje));
 		RequestContext rc = RequestContext.getCurrentInstance();
-		rc.execute(((dialog == null || dialog.length == 0) ? DLG_BASICO : dialog[0]) + ".show()");
+		rc.execute(((dialog == null || dialog.length == 0) ? "PF('"+DLG_BASICO+"')" : dialog[0]) + ".show()");
 	}
 
 	private static void enviaMensajeRedirecciona(Severity severity, String mensaje, String error) {

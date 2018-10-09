@@ -13,6 +13,7 @@
 <h:body>
     <h:form id="formulario">
         <ui:include src="./componentes/menu.xhtml"/>
+        <ui:include src="./componentes/mensajesUtil.xhtml"/>
         <p:spacer height="20"/>
         <div class="ui-g">
             <div class="ui-g-12">
@@ -104,7 +105,7 @@
                 <h:outputText value=" ¿Esta seguro de eliminar el empleado seleccionado?" />
             </f:facet>
             <div align="center">
-                <p:commandButton value="Si" action="#{empleadoBean.eliminar}" update="tabEmpleados" styleClass="ui-confirmdialog-yes" icon="ui-icon-check"/>
+                <p:commandButton value="Si" action="#{empleadoBean.eliminar}" update="tabEmpleados wIdAlertas" styleClass="ui-confirmdialog-yes" icon="ui-icon-check"/>
                 <p:commandButton value="No" type="button" onclick="PF('confirmEliminar').hide()" styleClass="ui-confirmdialog-no" icon="ui-icon-close"/>
             </div>
         </p:confirmDialog>

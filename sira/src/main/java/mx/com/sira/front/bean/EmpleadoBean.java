@@ -2,6 +2,7 @@ package mx.com.sira.front.bean;
 
 import mx.com.sira.front.clientes.feign.EmpleadoService;
 import mx.com.sira.front.dto.EmpleadoDto;
+import mx.com.sira.front.util.MessagesUtil;
 import mx.com.sira.front.util.MsgBeanUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,6 +26,8 @@ public class EmpleadoBean {
     private EmpleadoDto empleadoSeleccionado;
     private EmpleadoDto nuevoEmpleado;
     private EmpleadoDto empleadoEliminar;
+    @Resource
+    private MessagesUtil messagesUtil;
 
     @PostConstruct
     public void init() {
@@ -62,12 +65,15 @@ public class EmpleadoBean {
     public void eliminar() {
         try {
             LOG.info("Empleado seleccionado a eliminar {}", getEmpleadoEliminar());
-            empleadoService.eliminarEmpleado(getEmpleadoEliminar().getIdEmpleado(), null);
+             empleadoService.eliminarEmpleado(0, getEmpleadoEliminar());
             setEmpleados(empleadoService.getEmpleados());
             MsgBeanUtil.ejecutaAccion("PF('confirmEliminar').hide()");
+            MsgBeanUtil.info(messagesUtil.getMensaje("msg.empleado.eliminar.exitoso"));
         } catch (Exception ex) {
             MsgBeanUtil.ejecutaAccion("PF('confirmEliminar').hide()");
-            LOG.error("Error al realizar la peticion para eliminar un empleado", ex);
+            LOG.error("Error al realizar la peticion para eliminar un empleado", ex.getCause());
+            LOG.error("Error al realizar la peticion para eliminar un empleado", ex.getLocalizedMessage());
+            MsgBeanUtil.fatal(ex.getMessage());
 
         }
 
