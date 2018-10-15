@@ -47,6 +47,7 @@ public class EmpleadoController {
     @RequestMapping(value = "/empleado/", method = RequestMethod.POST)
     public ResponseEntity<List<Empleado>> crearEmpleado(@RequestBody Empleado empleado) throws EmpleadoException {
         List<Empleado> listaEmpleados = new ArrayList<>();
+        empleado.setEstatus(true) ;
         empleadoService.guardarEmpleado(empleado);
         listaEmpleados = empleadoService.getEmpleados();
         return new ResponseEntity<>(listaEmpleados, HttpStatus.OK);
