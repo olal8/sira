@@ -62,6 +62,12 @@
                 <h:outputText value="#{empleado.numInterior}"/>
             </p:column>
             <p:column style="width:45px;text-align: center">
+                <p:commandButton  action="#{empleadoBean.initModificar}" update="@([id$=dlgEmpleadoModificado])" icon="ui-icon-pencil" title="Modificar empleado">
+                    <f:setPropertyActionListener value="#{empleado}"
+                                                 target="#{empleadoBean.empleadoSeleccionado}"/>
+                </p:commandButton>
+            </p:column>
+            <p:column style="width:45px;text-align: center">
                 <p:commandButton  action="#{empleadoBean.initEliminar}" icon="ui-icon-trash" title="Eliminar empleado">
                     <f:setPropertyActionListener value="#{empleado}"
                                                  target="#{empleadoBean.empleadoSeleccionado}"/>
@@ -109,6 +115,36 @@
                 <p:commandButton value="No" type="button" onclick="PF('confirmEliminar').hide()" styleClass="ui-confirmdialog-no" icon="ui-icon-close"/>
             </div>
         </p:confirmDialog>
+
+        <p:dialog header="Modificar empleado" id="dlgEmpleadoModificado" widgetVar="dlgEmpleadoModificado" position="top"
+                  resizable="false" modal="true">
+            <h:panelGrid id="gridM" columns="2" cellpadding="5">
+                <p:outputLabel for="nombreM" value="Nombre(s): "/>
+                <p:inputText id="nombreM" value="#{empleadoBean.empleadoModificado.nombre}" disabled="true"/>
+                <p:outputLabel for="aPaternoM" value="Apellido Paterno: "/>
+                <p:inputText id="aPaternoM" value="#{empleadoBean.empleadoModificado.apellidoPaterno}" disabled="true"/>
+                <p:outputLabel for="aMaternoM" value="Apellido Materno: "/>
+                <p:inputText id="aMaternoM" value="#{empleadoBean.empleadoModificado.apellidoMaterno}" disabled="true"/>
+                <p:outputLabel for="fNacimientoM" value="Fecha Nacimiento: "/>
+                <p:calendar id="fNacimientoM" locale="es" navigator="true"
+                            value="#{empleadoBean.empleadoModificado.fechaNacimiento}" showOn="button" pattern="dd-MM-yyyy"/>
+                <p:outputLabel for="telefonoM" value="Telefono: "/>
+                <p:inputMask id="telefonoM" value="#{empleadoBean.empleadoModificado.telefono}" mask="(999) 999-9999"/>
+                <p:outputLabel for="calleM" value="Calle: "/>
+                <p:inputText id="calleM" value="#{empleadoBean.empleadoModificado.calle}"/>
+                <p:outputLabel for="numExteriorM" value="Num.Exterior: "/>
+                <p:inputText id="numExteriorM" value="#{empleadoBean.empleadoModificado.numExterior}"/>
+                <p:outputLabel for="numInteriorM" value="Num.Interior: "/>
+                <p:inputText id="numInteriorM" value="#{empleadoBean.empleadoModificado.numInterior}"/>
+                <p:outputLabel for="cpM" value="Cp: "/>
+                <p:inputMask id="cpM" mask="99999" value="#{empleadoBean.empleadoModificado.cp}"/>
+            </h:panelGrid>
+            <div align="center" style="margin-top:10px">
+                <p:commandButton icon="ui-icon-disk" value="Modificar" action="#{empleadoBean.modificar}"
+                                 update="tabEmpleados,wIdAlertas"/>
+                <p:commandButton value="Cancelar" icon="ui-icon-closethick" action="#{empleadoBean.cancelarModificacion}"/>
+            </div>
+        </p:dialog>
     </h:form>
 </h:body>
 </html>

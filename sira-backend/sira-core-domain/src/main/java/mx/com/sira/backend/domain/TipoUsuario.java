@@ -10,7 +10,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="tipo_usuario")
+@Table(name="tipo")
 public class TipoUsuario implements Serializable {
 	/**
 	 * 
@@ -18,7 +18,7 @@ public class TipoUsuario implements Serializable {
 	private static final long serialVersionUID = 806422934184416372L;
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
-	@Column(name="idtipo_usuario")
+	@Column(name="idtipo")
 	private long idTipo;
 	@Column(name="descripcion",nullable=false)
 	private String descripcion;

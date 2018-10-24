@@ -6,6 +6,7 @@ import mx.com.sira.front.util.MessagesUtil;
 import mx.com.sira.front.util.MsgBeanUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import sun.rmi.runtime.Log;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
@@ -26,6 +27,7 @@ public class EmpleadoBean {
     private EmpleadoDto empleadoSeleccionado;
     private EmpleadoDto nuevoEmpleado;
     private EmpleadoDto empleadoEliminar;
+    private EmpleadoDto empleadoModificado;
     @Resource
     private MessagesUtil messagesUtil;
 
@@ -33,6 +35,7 @@ public class EmpleadoBean {
     public void init() {
         empleados = empleadoService.getEmpleados();
         setNuevoEmpleado(new EmpleadoDto());
+        setEmpleadoModificado(new EmpleadoDto());
     }
 
     public void guardar() {
@@ -56,6 +59,29 @@ public class EmpleadoBean {
         MsgBeanUtil.ejecutaAccion("PF('dlgNuevoEmpleado').hide()");
     }
 
+    public void cancelarModificacion() {
+        LOG.info("Cancelando la modificacion del empleado");
+        setEmpleadoModificado(new EmpleadoDto());
+        MsgBeanUtil.ejecutaAccion("PF('dlgEmpleadoModificado').hide()");
+    }
+
+    public void initModificar() {
+        LOG.info("Empleado seleccionado a modificar {}", empleadoSeleccionado);
+        setEmpleadoModificado(empleadoSeleccionado);
+        MsgBeanUtil.ejecutaAccion("PF('dlgEmpleadoModificado').show()");
+    }
+
+    public void modificar() {
+        try {
+            LOG.info("Empleado con nuevos datos {}", empleadoModificado);
+            MsgBeanUtil.ejecutaAccion("PF('dlgEmpleadoModificado').hide()");
+            empleadoService.actualizarEmpleado(getEmpleadoModificado().getIdEmpleado(),getEmpleadoModificado());
+            MsgBeanUtil.info(messagesUtil.getMensaje("msg.empleado.modificado.exitoso"));
+        } catch (Exception ex) {
+            LOG.error("Error al modificar el empleado {}", ex);
+        }
+    }
+
     public void initEliminar() {
         LOG.info("Empleado seleccionado a eliminar {}", empleadoSeleccionado);
         setEmpleadoEliminar(empleadoSeleccionado);
@@ -65,7 +91,7 @@ public class EmpleadoBean {
     public void eliminar() {
         try {
             LOG.info("Empleado seleccionado a eliminar {}", getEmpleadoEliminar());
-             empleadoService.eliminarEmpleado(0, getEmpleadoEliminar());
+            empleadoService.eliminarEmpleado(getEmpleadoEliminar().getIdEmpleado(), getEmpleadoEliminar());
             setEmpleados(empleadoService.getEmpleados());
             MsgBeanUtil.ejecutaAccion("PF('confirmEliminar').hide()");
             MsgBeanUtil.info(messagesUtil.getMensaje("msg.empleado.eliminar.exitoso"));
@@ -109,5 +135,13 @@ public class EmpleadoBean {
 
     public void setEmpleadoEliminar(EmpleadoDto empleadoEliminar) {
         this.empleadoEliminar = empleadoEliminar;
+    }
+
+    public EmpleadoDto getEmpleadoModificado() {
+        return empleadoModificado;
+    }
+
+    public void setEmpleadoModificado(EmpleadoDto empleadoModificado) {
+        this.empleadoModificado = empleadoModificado;
     }
 }
