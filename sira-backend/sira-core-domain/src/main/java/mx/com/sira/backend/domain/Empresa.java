@@ -1,8 +1,11 @@
 package mx.com.sira.backend.domain;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.Date;
 
 /**
  * Created by gerry on 10/28/18.
@@ -16,7 +19,7 @@ public class Empresa implements Serializable {
     private Long idEmpresa;
     @Column(name = "denominacion")
     private String denominacion;
-    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "idgiro", nullable = false)
     private Giro giro;
     @Column(name = "calle")
@@ -35,8 +38,9 @@ public class Empresa implements Serializable {
     private String coordenada_x;
     @Column(name = "coordenada_y")
     private String coordenada_y;
-    @Column(name = "fechaRegistro")
-    private LocalDateTime fechaRegistro;
+    @Column(name = "fecha_registro")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd", timezone = "EST")
+    private Date fechaRegistro;
 
     public Long getIdEmpresa() {
         return idEmpresa;
@@ -126,11 +130,11 @@ public class Empresa implements Serializable {
         this.coordenada_y = coordenada_y;
     }
 
-    public LocalDateTime getFechaRegistro() {
+    public Date getFechaRegistro() {
         return fechaRegistro;
     }
 
-    public void setFechaRegistro(LocalDateTime fechaRegistro) {
+    public void setFechaRegistro(Date fechaRegistro) {
         this.fechaRegistro = fechaRegistro;
     }
 }

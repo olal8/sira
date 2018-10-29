@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -27,7 +28,6 @@ public class EmpresaServiceEmpl implements EmpresaService {
     @Autowired
     private Mensajes mensajes;
 
-    @Transactional(readOnly = true)
     @Override
     public List<Empresa> getEmpresas() throws EmpresaException {
         List<Empresa> empresas = new ArrayList<>();
@@ -40,7 +40,6 @@ public class EmpresaServiceEmpl implements EmpresaService {
         return empresas;
     }
 
-    @Transactional(readOnly = true)
     @Override
     public Empresa getEmpresa(long idEmpresa) throws EmpresaException {
         Empresa empresa = null;
@@ -57,6 +56,7 @@ public class EmpresaServiceEmpl implements EmpresaService {
     @Override
     public void guardarEmpresa(Empresa empresa) throws EmpresaException {
         try {
+            empresa.setFechaRegistro(new Date());
             empresaRepository.save(empresa);
         } catch (Exception ex) {
             LOG.error("Error al guardar la empresa", ex);
