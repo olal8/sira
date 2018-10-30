@@ -91,7 +91,7 @@ public class EmpleadoBean {
     public void eliminar() {
         try {
             LOG.info("Empleado seleccionado a eliminar {}", getEmpleadoEliminar());
-            empleadoService.eliminarEmpleado(getEmpleadoEliminar().getIdEmpleado(), getEmpleadoEliminar());
+            empleadoService.eliminarEmpleado(0, getEmpleadoEliminar());
             setEmpleados(empleadoService.getEmpleados());
             MsgBeanUtil.ejecutaAccion("PF('confirmEliminar').hide()");
             MsgBeanUtil.info(messagesUtil.getMensaje("msg.empleado.eliminar.exitoso"));
@@ -99,7 +99,7 @@ public class EmpleadoBean {
             MsgBeanUtil.ejecutaAccion("PF('confirmEliminar').hide()");
             LOG.error("Error al realizar la peticion para eliminar un empleado", ex.getCause());
             LOG.error("Error al realizar la peticion para eliminar un empleado", ex.getLocalizedMessage());
-            MsgBeanUtil.fatal(ex.getMessage());
+            MsgBeanUtil.error(ex.getMessage());
 
         }
 

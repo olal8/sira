@@ -1,6 +1,8 @@
 package mx.com.sira.front.util;
 
 
+import feign.codec.Decoder;
+import feign.gson.GsonDecoder;
 import mx.com.sira.front.exception.MyErrorDecoder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -13,7 +15,8 @@ public class FeignApiServiceConfig {
 
     @Bean
     public MyErrorDecoder myErrorDecoder() {
-        return new MyErrorDecoder();
+        Decoder decoder = new GsonDecoder();
+        return new MyErrorDecoder(decoder);
     }
 
 }

@@ -85,9 +85,11 @@ public class EmpleadoController {
             empleadoService.modificarEmpleado(empleadoActual);
             empleados = empleadoService.getEmpleados();
         } catch (EntityNotFoundException en) {
-            throw new EmpleadoException(en.getMessage());
+            LOGGER.error("error al eliminar empleados {}",en);
+            throw new EmpleadoException(mensajes.getMensaje("empleados.error6"));
         } catch (Exception ex) {
-            throw new EmpleadoException(ex.getMessage());
+            LOGGER.error("Eliminar empleado {}",ex);
+            throw new EmpleadoException(mensajes.getMensaje("empleados.error6"));
         }
         return new ResponseEntity<List<Empleado>>(empleados, HttpStatus.OK);
     }
