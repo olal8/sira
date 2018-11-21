@@ -45,7 +45,7 @@
                     <f:convertDateTime pattern="dd-MM-yyyy"/>
                 </h:outputText>
             </p:column>
-            <p:column headerText="Telefono" filterBy="#{empleado.telefono}" filterMatchMode="contains"
+            <p:column headerText="Tel&eacute;fono" filterBy="#{empleado.telefono}" filterMatchMode="contains"
                       style="cursor:pointer;text-align:center; word-wrap:break-word; white-space:normal;">
                 <h:outputText value="#{empleado.telefono}"/>
             </p:column>
@@ -53,11 +53,11 @@
                       style="cursor:pointer;text-align:center; word-wrap:break-word; white-space:normal;">
                 <h:outputText value="#{empleado.calle}"/>
             </p:column>
-            <p:column headerText="Num. Exterior" filterBy="#{empleado.numExterior}" filterMatchMode="contains"
+            <p:column headerText="N&uacute;m. Exterior" filterBy="#{empleado.numExterior}" filterMatchMode="contains"
                       style="cursor:pointer;text-align:center; word-wrap:break-word; white-space:normal;">
                 <h:outputText value="#{empleado.numExterior}"/>
             </p:column>
-            <p:column headerText="Num. Interior" filterBy="#{empleado.numInterior}" filterMatchMode="contains"
+            <p:column headerText="N&uacute;m. Interior" filterBy="#{empleado.numInterior}" filterMatchMode="contains"
                       style="cursor:pointer;text-align:center; word-wrap:break-word; white-space:normal;">
                 <h:outputText value="#{empleado.numInterior}"/>
             </p:column>
@@ -88,13 +88,13 @@
                 <p:outputLabel for="fNacimiento" value="Fecha Nacimiento: "/>
                 <p:calendar id="fNacimiento" locale="es" navigator="true"
                             value="#{empleadoBean.nuevoEmpleado.fechaNacimiento}" showOn="button" pattern="dd-MM-yyyy"/>
-                <p:outputLabel for="telefono" value="Telefono: "/>
+                <p:outputLabel for="telefono" value="Tel&eacute;fono: "/>
                 <p:inputMask id="telefono" value="#{empleadoBean.nuevoEmpleado.telefono}" mask="(999) 999-9999"/>
                 <p:outputLabel for="calle" value="Calle: "/>
                 <p:inputText id="calle" value="#{empleadoBean.nuevoEmpleado.calle}"/>
-                <p:outputLabel for="numExterior" value="Num.Exterior: "/>
+                <p:outputLabel for="numExterior" value="N&uacute;m.Exterior: "/>
                 <p:inputText id="numExterior" value="#{empleadoBean.nuevoEmpleado.numExterior}"/>
-                <p:outputLabel for="numInterior" value="Num.Interior: "/>
+                <p:outputLabel for="numInterior" value="N&uacute;m.Interior: "/>
                 <p:inputText id="numInterior" value="#{empleadoBean.nuevoEmpleado.numInterior}"/>
                 <p:outputLabel for="cp" value="Cp: "/>
                 <p:inputMask id="cp" mask="99999" value="#{empleadoBean.nuevoEmpleado.cp}"/>
@@ -128,13 +128,13 @@
                 <p:outputLabel for="fNacimientoM" value="Fecha Nacimiento: "/>
                 <p:calendar id="fNacimientoM" locale="es" navigator="true"
                             value="#{empleadoBean.empleadoModificado.fechaNacimiento}" showOn="button" pattern="dd-MM-yyyy"/>
-                <p:outputLabel for="telefonoM" value="Telefono: "/>
+                <p:outputLabel for="telefonoM" value="Tel&eacute;fono: "/>
                 <p:inputMask id="telefonoM" value="#{empleadoBean.empleadoModificado.telefono}" mask="(999) 999-9999"/>
                 <p:outputLabel for="calleM" value="Calle: "/>
                 <p:inputText id="calleM" value="#{empleadoBean.empleadoModificado.calle}"/>
-                <p:outputLabel for="numExteriorM" value="Num.Exterior: "/>
+                <p:outputLabel for="numExteriorM" value="N&uacute;m.Exterior: "/>
                 <p:inputText id="numExteriorM" value="#{empleadoBean.empleadoModificado.numExterior}"/>
-                <p:outputLabel for="numInteriorM" value="Num.Interior: "/>
+                <p:outputLabel for="numInteriorM" value="N&uacute;m.Interior: "/>
                 <p:inputText id="numInteriorM" value="#{empleadoBean.empleadoModificado.numInterior}"/>
                 <p:outputLabel for="cpM" value="Cp: "/>
                 <p:inputMask id="cpM" mask="99999" value="#{empleadoBean.empleadoModificado.cp}"/>

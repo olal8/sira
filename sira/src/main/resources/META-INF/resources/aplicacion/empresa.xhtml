@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+<h:head>
+
+    <script type="text/javascript" src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.51.0/mapbox-gl.js'></script>
+    <script type="text/javascript" src='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v2.3.0/mapbox-gl-geocoder.min.js'></script>
+    <link rel='stylesheet' href='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v2.3.0/mapbox-gl-geocoder.css' type='text/css' />
+    <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.51.0/mapbox-gl.css' rel='stylesheet' />
+    <style type="text/css">
+        body { margin:0; padding:0; }
+        #map { position:absolute; top:0; bottom:0; width:100%; }
+        .geocoder {
+            position:absolute;
+            z-index:1;
+            width:50%;
+            left:50%;
+            margin-left:-25%;
+            top:20px;
+        }
+
+    </style>
+    <script type="text/javascript">
+        function initMap() {
+            mapboxgl.accessToken = 'pk.eyJ1IjoiZ2VyYXJkb2dvbWV6IiwiYSI6ImNqbnl3aW9mZDFhM24zcWtqM3o4MTRrbTcifQ.ktZm38kInj3wtV2sot5ssg';
+            var map = new mapboxgl.Map({
+                container: 'map', // container id
+                style: 'mapbox://styles/mapbox/streets-v9', // stylesheet location
+                center: [-96.72, 17.05], // starting position [lng, lat]
+                zoom: 14 // starting zoom
+            });
+            var geocoder = new MapboxGeocoder({
+                accessToken: mapboxgl.accessToken,
+                placeholder: "Ejemplo. Oaxaca"
+            });
+
+            document.getElementById('geocoder').appendChild(geocoder.onAdd(map));
+            map.addControl(new mapboxgl.NavigationControl());
+            var marker = new mapboxgl.Marker({
+                draggable: true
+            })
+                .setLngLat([-96.72, 17.05])
+            map.on('click', function (e) {
+                console.log("longitud: "+e.lngLat.lng)
+                console.log("latitud: "+e.lngLat.lat)
+                marker.setLngLat([e.lngLat.lng, e.lngLat.lat])
+                    .addTo(map);
+            });
+        }
+    </script>
+
+    <title>Empresa</title>
+</h:head>
+<h:body>
+    <h:form id="formularioEmpresa">
+        <ui:include src="./componentes/menu.xhtml"/>
+        <ui:include src="./componentes/mensajesUtil.xhtml"/>
+        <p:spacer height="20"/>
+        <div class="ui-g">
+            <div class="ui-g-12">
+                <p:commandButton id="guardarEmp" value="Nueva Empresa"  icon="ui-icon-suitcase"
+                                 update="dlgNuevaEmpresa"
+                                 action="#{empresaBean.initCrearEmpresa}" />
+            </div>
+        </div>
+        <p:dataTable id="tabEmpresas" var="empresa" widgetVar="empresa"
+                     style="margin-bottom:100px" value="#{empresaBean.empresas}"
+                     paginator="true" rows="10" selectionMode="single" rowKey="#{empresa.idEmpresa}"
+                     selection="#{empresaBean.empresaSeleccionada}"
+                     emptyMessage="No se existen empresas dadas de alta"
+                     rowsPerPageTemplate="5,10,15" paginatorPosition="bottom">
+            <p:column headerText="Nombre" filterBy="#{empresa.denominacion}" filterMatchMode="contains"
+                      style="cursor:pointer;text-align:center; word-wrap:break-word; white-space:normal;width:160px;">
+                <h:outputText value="#{empresa.denominacion}"/>
+            </p:column>
+            <p:column headerText="Giro" filterBy="#{empresa.giro.descripcion}" filterMatchMode="contains"
+                      style="cursor:pointer;text-align:center; word-wrap:break-word; white-space:normal;">
+                <h:outputText value="#{empresa.giro.descripcion}"/>
+            </p:column>
+            <p:column headerText="Tel&eacute;fono" filterBy="#{empresa.telefono}" filterMatchMode="contains"
+                      style="cursor:pointer;text-align:center; word-wrap:break-word; white-space:normal;">
+                <h:outputText value="#{empresa.telefono}"/>
+            </p:column>
+            <p:column headerText="Calle" filterBy="#{empresa.calle}" filterMatchMode="contains"
+                      style="cursor:pointer;text-align:center; word-wrap:break-word; white-space:normal;">
+                <h:outputText value="#{empresa.calle}"/>
+            </p:column>
+            <p:column headerText="N&uacute;m. Exterior" filterBy="#{empresa.num_ext}" filterMatchMode="contains"
+                      style="cursor:pointer;text-align:center; word-wrap:break-word; white-space:normal;">
+                <h:outputText value="#{empresa.num_ext}"/>
+            </p:column>
+            <p:column headerText="N&uacute;m. Interior" filterBy="#{empresa.num_int}" filterMatchMode="contains"
+                      style="cursor:pointer;text-align:center; word-wrap:break-word; white-space:normal;">
+                <h:outputText value="#{empresa.num_int}"/>
+            </p:column>
+            <p:column headerText="Colonia" filterBy="#{empresa.colonia}" filterMatchMode="contains"
+                      style="cursor:pointer;text-align:center; word-wrap:break-word; white-space:normal;">
+                <h:outputText value="#{empresa.colonia}"/>
+            </p:column>
+            <p:column headerText="CP" filterBy="#{empresa.cp}" filterMatchMode="contains"
+                      style="cursor:pointer;text-align:center; word-wrap:break-word; white-space:normal;">
+                <h:outputText value="#{empresa.cp}"/>
+            </p:column>
+            <p:column headerText="Fecha de Registro" filterBy="#{empresa.fechaRegistro}" filterMatchMode="contains"
+                      style="cursor:pointer;text-align:center; word-wrap:break-word; white-space:normal;">
+                <h:outputText value="#{empresa.fechaRegistro}">
+                    <f:convertDateTime pattern="dd-MM-yyyy"/>
+                </h:outputText>
+            </p:column>
+            <p:column style="width:45px;text-align: center">
+                <p:commandButton icon="ui-icon-pencil" title="Modificar empresa">
+                    <f:setPropertyActionListener value="#{empresa}"
+                                                 target="#{empresaBean.empresaSeleccionada}"/>
+                </p:commandButton>
+            </p:column>
+            <p:column style="width:45px;text-align: center">
+                <p:commandButton  icon="ui-icon-trash" title="Eliminar empresa">
+                    <f:setPropertyActionListener value="#{empresa}"
+                                                 target="#{empresaBean.empresaSeleccionada}"/>
+                </p:commandButton>
+            </p:column>
+        </p:dataTable>
+
+        <p:dialog header="Capturar nueva empresa" id="dlgNuevaEmpresa" widgetVar="dlgNuevaEmpresa" position="top"
+                  resizable="false" modal="true">
+            <h:panelGrid id="gridEm" columns="2" cellpadding="5">
+                <p:outputLabel for="nombre" value="Nombre: "/>
+                <p:inputText id="nombre" value="#{empresaBean.nuevaEmpresa.denominacion}"/>
+
+            </h:panelGrid>
+
+        </p:dialog>
+    </h:form>
+
+</h:body>
+</html>
+

@@ -1,8 +1,10 @@
 package mx.com.sira.backend.controller;
 
 import mx.com.sira.backend.domain.Empresa;
+import mx.com.sira.backend.domain.Giro;
 import mx.com.sira.backend.excepciones.EmpresaException;
 import mx.com.sira.backend.service.EmpresaService;
+import mx.com.sira.backend.service.GiroService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +25,8 @@ public class EmpresaController {
     private static final Logger LOGGER = LoggerFactory.getLogger(EmpresaController.class);
     @Autowired
     private EmpresaService empresaService;
+    @Autowired
+    private GiroService giroService;
 
     @RequestMapping(value = "/empresa/", method = RequestMethod.GET)
     public ResponseEntity<List<Empresa>> obtenerEmpresas() {
@@ -58,5 +62,16 @@ public class EmpresaController {
         empresaActual.setCoordenada_y(empresa.getCoordenada_y());
         empresas = empresaService.getEmpresas();
         return new ResponseEntity<List<Empresa>>(empresas, HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/giro/", method = RequestMethod.GET)
+    public ResponseEntity<List<Giro>> obtenerGiros() {
+        List<Giro> giros = new ArrayList<>();
+        try {
+            giros = giroService.listadoGiros();
+        } catch (Exception ex) {
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
+        return new ResponseEntity<List<Giro>>(giros, HttpStatus.OK);
     }
 }
